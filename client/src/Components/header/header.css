@@ -1,0 +1,94 @@
+/* NAV BAR */
+.hdr-frame {
+    overflow: hidden;
+    font-family: 'Black Ops One', cursive;
+    background-color: rgba(54,54,54,1);
+    width: 100%;
+    height: 7%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.hdr-img{
+    width: 25%;
+    height: 80%;
+    margin: .5% 0 0 5%;
+    padding: 3%;
+    box-shadow: .1rem .1rem 1rem .5rem #0000009c inset;
+}
+
+.hdr-banner{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    box-shadow: .1rem .1rem .3rem .1rem #0000004d inset;
+    background-color: #6d1f1f;
+}
+    
+.hdr-banner .hdr-home {
+    text-decoration: none;
+    color: #282c34;
+    font-size: 4vw;
+    background: -webkit-linear-gradient(#bdbdbd, #424242);
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.911);
+    -webkit-text-fill-color: transparent;
+}
+
+    
+.hdr-options {
+    background-color: rgba(54,54,54,1);
+    box-shadow: .3rem .3rem .3rem .3rem #0000004d inset;
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+    
+.hdr-logout {
+    margin-left: 5%;
+    padding: .4% 2% .4% 2%;
+    background-color: #282c34;
+    height: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #ffffff00;
+    text-shadow: .2rem 0rem 0rem #0000004d;
+    transition: all 600ms ease-in-out;
+}
+    
+.hdr-login {
+    margin-left: 5%;
+    padding: .4% 2% .4% 2%;
+    background-color: #282c34;
+    height: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #ffffff00;
+    text-shadow: .2rem 0rem 0rem #0000004d;
+    transition: all 600ms ease-in-out;
+}
+    
+.hdr-login:hover, .hdr-register:hover,  .hdr-logout:hover{
+    text-shadow: .2rem 0rem 0rem #b4b4b4b6;
+}
+    
+.hdr-register {
+    margin-left: .5%;
+    padding: .4% 2% .4% 2%;
+    background-color: #282c34;
+    height: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #ffffff00;
+    text-shadow: .2rem 0rem 0rem #0000004d;
+    transition: all 600ms ease-in-out;
+}
+/* END OF NAV BAR */

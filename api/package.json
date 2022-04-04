@@ -1,0 +1,35 @@
+{
+  "name": "project_battleship",
+  "version": "0.0.1",
+  "description": "small api and front end project - by Waylay70K and Uzi",
+  "main": "index.js",
+  "scripts": {
+    "latest": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Waylay70K & Uzi",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.15",
+    "node-schedule": "^2.1.0",
+    "pg": "^8.7.1",
+    "socket.io": "^4.4.1",
+    "socketio-jwt": "^4.6.2",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^14.2.0",
+    "http-server": "^14.1.0",
+    "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "node": "14.17.1"
+  }
+}

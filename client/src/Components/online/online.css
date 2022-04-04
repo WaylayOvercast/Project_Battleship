@@ -1,0 +1,140 @@
+
+
+.online {
+    font-family: 'Black Ops One', cursive;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.online .online-welcome {
+    background-image: url('../../images/projectBattleShip.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: rgb(247, 247, 247);
+    margin-top: 5%;
+    box-shadow: 0rem 0rem 8rem rgb(0,0,0) inset;
+    width: 90%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.online .online-welcome p {
+    box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.753);
+    word-break:normal;
+    width: 40%;
+    height: 15rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    font-size: 2rem;
+    color:rgb(34, 34, 34);
+    backdrop-filter: blur(5px);
+    padding: 2%;
+    border-radius: 2rem 1rem 1rem 2rem;
+    background-color: rgba(99, 18, 18, 0.39);
+}
+
+.online .online-welcome p::-webkit-scrollbar {
+    background-color: rgba(12, 12, 12, 0.432);
+    border-radius: 0 2rem 2rem 0;
+}
+.online .online-welcome p::-webkit-scrollbar-thumb{
+    background-color: rgba(255, 255, 255, 0.644);
+    border-radius: 0 1rem 1rem 0;
+}
+
+.online .online-panel {
+    background-color: #6d1f1f;
+    width: 100%;
+    height: 8vw;
+    min-height: 7rem;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.37) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.online .online-panel .find-create-btn, .single-player-btn {
+    font-family: 'Black Ops One', cursive;
+    font-size: 1rem;
+    width: 10vw;
+    height: 6vh;
+    max-height: 6rem;
+    min-width: fit-content;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+    border-radius: 1.3rem;
+    background-color: #d1d1d1;
+    transition: all 300ms;
+}
+
+.online .online-panel .find-create-btn:hover {
+    background: #57d376;
+    box-shadow: .1rem .1rem .5rem .1rem #000000a8 inset;
+}
+
+.online .online-panel .single-player-btn:hover {
+    background: #57b6d3;
+    box-shadow: .1rem .1rem .5rem .1rem #000000a8 inset;
+}
+
+.match-maker-open {
+    overflow-y: scroll;
+    margin-top: 3%;
+    position: absolute;
+    display:flex;
+    justify-self: center;
+    align-self: center;
+    backdrop-filter: blur(15px);
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.466);
+    box-shadow: 0rem 0rem 6rem .5rem #000000c2 inset;
+    width: 87vw;
+    height: 87vh;
+}
+
+.match-maker-open::-webkit-scrollbar {
+    background-color: rgba(65, 65, 65, 0.767);
+    border-radius: 0 2rem 2rem 0;
+}
+
+.match-maker-open::-webkit-scrollbar-thumb{
+    background-color: rgba(255, 255, 255, 0.644);
+    border-radius: 0 1rem 1rem 0;
+}
+
+.match-maker-open .match-maker-list {
+    border: 3px solid rgb(3, 3, 3);
+    border-radius: 1rem 0 0 1rem;
+    height: 99%;
+    width: 75%; 
+}
+
+.match-maker-open .match-maker-list-nav {
+    display: flex;
+    background-color: black;
+    width: 100%;
+    height: 5%;
+    align-items: center;
+}
+
+.match-maker-open .match-maker-list-nav .match-nav-back-open {
+    height: 70%;
+    width: 8%;
+    margin-left: 1%;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    border: 1.5px solid rgb(54, 54, 54);
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.match-maker-list-nav .match-nav-back-closed {
+    display: none;
+}
