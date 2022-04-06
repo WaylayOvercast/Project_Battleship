@@ -1,18 +1,17 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
-
-
+import './game.css'
 import './online.css'
-const socket = io.connect('http://localhost:5000');
 
-const init_socket = () => {
+
+const init_socket = (socket) => {
     socket.emit('auth', sessionStorage.token)
     return socket.on('allgood', () => {
     })
 } 
     
-export default function Online({state}) {
+export default function Online({state, socket}) {
     const navigate = useNavigate();
     const [lobbies, updateLobbies] = useState({
         isOpen: false,
@@ -30,7 +29,6 @@ export default function Online({state}) {
         }else{
             return alert('failed to connect to Online match maker')
         }
-        
     }
 
     return (

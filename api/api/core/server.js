@@ -22,7 +22,6 @@ const socket_tools = require('./socket-tools');
 
 socket_tools.start(io); // imported socket functions *needs work*
 
-
 server.get('/', (req, res, next)=> { res.status(200)});
 
 

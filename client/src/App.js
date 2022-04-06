@@ -10,7 +10,9 @@ import RegisterForm from './Components/register/RegisterForm';
 import Logout from './Components/logout/Logout';
 import Home from './Components/home/Home';
 import Online from './Components/online/online';
-import Singleplayer from './Components/online/singleplayer/Singleplayer'
+import Singleplayer from './Components/online/singleplayer/Singleplayer';
+import { io } from 'socket.io-client'
+const socket = io.connect('http://localhost:5000');
 
 function App() {
   const [ store, setStore ] = useRecoilState(storage);
@@ -39,8 +41,8 @@ function App() {
     <div className='App'>
       <Header state = {state}/>
       <Routes>
-        <Route exact path='/online/singlePlayer' element={<Singleplayer/>}/>
-        <Route exact path='/online' element={<Online state = {state}/>}/>
+        <Route exact path='/online/singlePlayer' element={<Singleplayer state = {state} socket = {socket}/>}/>
+        <Route exact path='/online' element={<Online state = {state} socket = {socket}/>}/>
         <Route exact path='/' element={<Home state = {state}/>}/>
         <Route exact path='/login' element={<LoginForm state = {state} setState = {setState}/>}/>
         <Route exact path='/logout' element={<Logout state = {state} setState = {setState}/>}/>

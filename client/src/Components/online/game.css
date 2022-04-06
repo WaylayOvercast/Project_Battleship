@@ -1,0 +1,151 @@
+
+
+
+
+.game-window {
+    width: 100%;
+    height: 98%;
+    margin-top: 1%;
+    background-color: rgb(66, 66, 66);
+    display: flex;
+}
+
+.game-window .game-window-nav {
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    background-color: rgb(39, 48, 39);
+    display: flex;
+    align-items: center;
+}
+
+.game-window .game-window-nav .game-nav-btn { 
+    width: 5%;
+    height: 70%;
+    background-color: rgb(73, 23, 23);
+    box-shadow: 0 0 .3rem .2rem rgba(0, 0, 0, 0.377) inset;
+    color: rgb(165, 165, 165);
+    min-width: fit-content;
+    min-height: fit-content;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1%;
+    margin-left: 1%;
+    transition: all 1300ms ease-out;
+}
+
+.game-window .game-window-nav .game-nav-btn:hover { 
+    background-color: rgb(156, 22, 22);
+    color: rgb(185, 132, 132);
+    box-shadow: 0rem 0rem 2rem .1rem rgba(180, 22, 22, 0.692);
+    transition: all 250ms ease-in;
+}
+
+.game-window .game-window-nav .game-play-btn {
+    width: 7%;
+    height: 70%;
+    background-color: rgb(24, 46, 26);
+    box-shadow: 0 0 .3rem .2rem rgba(0, 0, 0, 0.377) inset;
+    color: rgb(165, 165, 165);
+    min-width: fit-content;
+    min-height: fit-content;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1%;
+    margin-left: 20.7%;
+    transition: all 1300ms ease-out;
+}
+
+.game-window .game-window-nav .game-play-btn:hover { 
+    background-color: rgb(38, 129, 43);
+    color: rgb(169, 196, 168);
+    box-shadow: 0rem 0rem 2rem .1rem rgba(35, 180, 22, 0.692);
+    transition: all 250ms ease-in;
+}
+
+.game-window .game-window-nav .game-fire-btn {
+    width: 7%;
+    height: 70%;
+    background-color: rgb(73, 23, 23);
+    box-shadow: 0 0 .3rem .2rem rgba(0, 0, 0, 0.377) inset;
+    color: rgb(165, 165, 165);
+    min-width: fit-content;
+    min-height: fit-content;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1%;
+    margin-left: 5%;
+    transition: all 1300ms ease-out;
+}
+
+.game-window .game-window-nav .game-fire-btn:hover {
+    background-color: rgb(156, 22, 22);
+    color: rgb(221, 170, 170);
+    box-shadow: 0rem 0rem 2rem .1rem rgba(180, 22, 22, 0.692);
+    transition: all 250ms ease-in;
+}
+
+.game-window .enemy-board {
+    outline: .5rem solid rgb(68, 34, 34);
+    justify-self: center;
+    align-self: flex-end;
+    margin: 0 0 1% 2%;
+    width: 40rem;
+    height: 40rem;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(10, .1fr);
+    background-color: rgb(19, 43, 16);
+    font-family: 'Black Ops One', cursive;
+    color: rgb(104, 103, 103);
+    font-size: .7rem;
+}
+
+.game-window .self-board {
+    outline: .5rem solid rgb(34, 34, 68);
+    justify-self: center;
+    align-self: flex-end;
+    margin: 0 0 1% 2%;
+    width: 40rem;
+    height: 40rem;
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(10, .1fr);
+    background-color: rgb(19, 43, 16);
+    font-family: 'Black Ops One', cursive;
+    color: rgb(104, 103, 103);
+    font-size: .7rem;
+}
+
+.game-window .enemy-board > div {
+    background-color: rgb(24, 24, 24);
+    transition: all 1500ms ease-out;
+    user-select: none;
+}
+
+.game-window .enemy-board > div:hover {
+    background-color: rgb(12, 61, 14);
+    box-shadow: 0rem 0rem 2rem .4rem rgb(12, 61, 14);
+    transition: all 1ms ease-in;
+}
+
+.game-window .self-board > div {
+    background-color: rgb(24, 24, 24);
+    transition: all 1500ms ease-out;
+    user-select: none;
+}
+
+.game-window .self-board > div:hover { 
+    background-color: rgb(12, 61, 14);
+    box-shadow: 0rem 0rem 2rem .4rem rgb(12, 61, 14);
+    transition: all 1ms ease-in;
+}
+
+.game-window .game-commands-window {
+    align-self: flex-end;
+    margin-left: 4.5%;
+    width: 30rem;
+    height: 95%;
+    background-color: rgb(39, 48, 39);
+    box-shadow: 1rem 1rem 1rem black inset;
+}
