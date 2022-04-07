@@ -5,11 +5,9 @@ import './game.css'
 import './online.css'
 
 
-const init_socket = (socket) => {
-    socket.emit('auth', sessionStorage.token)
-    return socket.on('allgood', () => {
-    })
-} 
+
+
+
     
 export default function Online({state, socket}) {
     const navigate = useNavigate();
@@ -22,14 +20,36 @@ export default function Online({state, socket}) {
         state.isLogged && navigate('/online/singlePlayer')
     }
 
-    function openMatchMaker() {
-        if(init_socket().connected){
-            socket.emit('match')
-            updateLobbies({...lobbies, isOpen: true})
-        }else{
-            return alert('failed to connect to Online match maker')
-        }
+    function close_match_maker(socket) {
+        socket.emit('leave')
+        updateLobbies({...lobbies, isOpen: false, browserData: []})
     }
+
+    const init_socket = (socket) => {
+        socket.emit('auth', sessionStorage.token)
+        return socket.on('allgood',() =>{})
+    } 
+
+    const init_match_maker = async (state, lobbies, updateLobbies, socket) => {
+        if(state.isLogged && sessionStorage.token && init_socket(socket).connected) {
+            socket.emit('init-match-maker')
+            socket.emit('fetch-matches')
+            socket.on('match-maker-join', () => {
+               socket.emit('fetch-matches')
+            })
+            socket.on('matches', (matches) => {
+                if(matches.length > 0){
+                    updateLobbies({...lobbies, isOpen: true, browserData:[...lobbies.browserData, ...matches]})
+                }else{
+                    updateLobbies({...lobbies, isOpen: true})
+                }
+            })
+        } else {
+            alert('Failed to connect to Online match maker! :(')
+        }
+        
+    }    
+    
 
     return (
         <section className='online'> 
@@ -41,7 +61,7 @@ export default function Online({state, socket}) {
             </div>
             <div className='online-panel'>     
                 <button className='find-create-btn' 
-                    onClick={() => openMatchMaker()}>
+                    onClick={async() => await init_match_maker(state, lobbies, updateLobbies, socket)}>
                     Find or Create a match
                 </button>
                 <button className='single-player-btn'
@@ -52,12 +72,22 @@ export default function Online({state, socket}) {
                 <div className='match-maker-list'>
                     <div className='match-maker-list-nav'>
                         <button 
-                            onClick={() => updateLobbies({...lobbies, isOpen: false})}
+                            onClick={() => close_match_maker(socket)}
                             className={lobbies.isOpen ? 'match-nav-back-open':'match-nav-back-closed'}
                             > 	
                             &#10094;
                         </button>
                     </div>
+                    {lobbies.browserData.length > 0 && lobbies.isOpen ? lobbies.browserData.map( (player, indx) => {
+                        return (
+                            <div className='MM-player' key={indx}>
+                                <p className='MM-tag'>&#9875;</p>
+                                <p className='MM-username'>{player.username}</p>
+                            </div>
+                        )
+                    })
+                    : 
+                    lobbies.isOpen && <div className='MM-empty'><p>Finding Players...</p></div>}
                 </div>
             </section>
         </section>

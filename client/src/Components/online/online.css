@@ -138,3 +138,35 @@
 .match-maker-list-nav .match-nav-back-closed {
     display: none;
 }
+
+.match-maker-open .match-maker-list .MM-player {
+    width: 100%;
+    height: 10%;
+    color: #d1d1d1;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    background-color: #00000067;
+    font-size: 1.5rem;
+    display: flex;
+    
+}
+
+.match-maker-open .match-maker-list .MM-player .MM-tag {
+    color: black;
+}
+
+.match-maker-open .match-maker-list .MM-player .MM-username {
+    margin-left: 5%;
+}
+
+.match-maker-open .match-maker-list .MM-empty {
+    width: 100%;
+    height: 10%;
+    color: #a5a5a5;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    background-color: #00000067;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+}

@@ -4,10 +4,11 @@ const {JWT_SECRET, JWT_REFRESH} = require('../../variableConfig')
 const cleanup = require('node-schedule');
 
 
-function createToken(user_id){
+function createToken(user_id, username){
  
     const payload = {
       user_id: user_id,
+      username: username
     }
     const options = {
         expiresIn: '1d'               // needs work
@@ -46,10 +47,6 @@ async function add(user, uuid) {
     return findById(uuid)
 }
 
-async function setIsActive(uuid, bool){
-    await db('user').update({isActive: bool}).where('user_id', uuid)
-}
-
 module.exports = {
     add,
     find,
@@ -57,5 +54,4 @@ module.exports = {
     findById,
     createToken,
     findOthers,
-    setIsActive
 }

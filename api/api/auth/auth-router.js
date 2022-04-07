@@ -8,7 +8,7 @@ const Users = require('./auth-model')
 
 router.put('/rtrauth', checkToken, (req, res, next)=> {
   try{
-    const token = Users.createToken(req.body.user_id)
+    const token = Users.createToken(req.body.user_id, req.body.username)
     console.log(`user with id: ${req.body.user_id} is refreshing tokens`)
     res.status(201).json({token:token})
   }catch(err){
@@ -26,8 +26,7 @@ router.post('/register', checkSubmission, async (req, res, next) => {
         password: bcrypt.hashSync(password.toString(), ~~BCRYPT_ROUNDS)   
       }
     const created = await Users.add(newUser, req.body.user_id);
-    Users.setIsActive(created.user_id, true);
-    const token = Users.createToken(req.body);
+    const token = Users.createToken(user_id, username);
     res.status(201).json({username: created.username, user_id: created.user_id, token: token});
   }catch (err){
     next(err);
@@ -37,8 +36,7 @@ router.post('/register', checkSubmission, async (req, res, next) => {
 router.put('/login', checkLogin, (req, res, next) => {
   try {
     console.log(req.body)
-    Users.setIsActive(req.user.user_id, true);
-    const token = Users.createToken(req.user);
+    const token = Users.createToken(req.user.user_id, req.user.username);
     res.status(200).json({username: req.user.username, user_id: req.user.user_id, token: token});
   }catch (err){
     next(err);
@@ -47,7 +45,6 @@ router.put('/login', checkLogin, (req, res, next) => {
 
 router.put('/logout', checkLogout, (req, res, next) => {
   try {
-    Users.setIsActive(req.body.user_id, false);
     res.status(200).json({message: 'OK'});
   } catch (err) {
     next(err);

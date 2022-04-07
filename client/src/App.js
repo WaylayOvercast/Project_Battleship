@@ -12,6 +12,7 @@ import Home from './Components/home/Home';
 import Online from './Components/online/online';
 import Singleplayer from './Components/online/singleplayer/Singleplayer';
 import { io } from 'socket.io-client'
+
 const socket = io.connect('http://localhost:5000');
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [ state, setState] = useState({
     isLogged: false,
   })
+  
   useEffect(() => {
     if(sessionStorage.user_id && sessionStorage.username && sessionStorage.token){
       const profile = {

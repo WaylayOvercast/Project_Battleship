@@ -29,25 +29,54 @@ module.exports = {
     }
 
     io.on('connection', (socket) => {
-      
       console.log('connected', socket.id)
+      
       socket.on('auth', token => {
         console.log('is_auth?:',authenticate(token))
         if(authenticate(token)){
           socket.emit('allgood')
+          socket.handshake.auth.token = token
+          socket.handshake.auth.user = jwt.decode(token)
+          socket.on('init-match-maker', () => {
+            socket.join('match-maker')
+            socket.to('match-maker').emit('match-maker-refresh')
+          })
+
+          socket.on('fetch-matches', async () => {
+            const socks = await io.in('match-maker').fetchSockets()
+            const players = []
+            for(let x = 0; x < socks.length && x < 10; x++){
+              if(socks[x].id !== socket.id){
+                players.push(
+                  {id: socks[x].id, username: socks[x].handshake.auth.user.username}
+                )
+              }
+            }
+            socket.emit('matches', players)
+          })
+      
+          socket.on('leave', () => {
+            socket.to('match-maker').emit('match-maker-refresh')
+            socket.leave('match-maker')
+          })
         }else{
           socket.disconnect() 
         }
       })
-      socket.on('match', (socket) => {
-        console.log('matching...', socket.id)
-      })
+
+
       socket.on('disconnect', () => {
         console.log('disconnected', socket.id)
       })
     })
-    
-            
-     
   }
 }
+
+//const name = jwt.decode(socket.handshake.auth.token)
+  // socket.join('match-maker')
+  // socket.emit('match-maker-running')
+  // socket.on('find-match', async () => {
+  //   const clients = await io.in('match-maker').fetchSockets()
+  //   console.log(clients)
+  //   socket.emit('matches', clients)
+  // })
