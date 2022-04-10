@@ -20,8 +20,9 @@ function App() {
   const [ state, setState] = useState({
     isLogged: false,
   })
-  
+
   useEffect(() => {
+    
     if(sessionStorage.user_id && sessionStorage.username && sessionStorage.token){
       const profile = {
         user_id: sessionStorage.user_id,
@@ -44,7 +45,7 @@ function App() {
       <Header state = {state}/>
       <Routes>
         <Route exact path='/online/singlePlayer' element={<Singleplayer state = {state} socket = {socket}/>}/>
-        <Route exact path='/online' element={<Online state = {state} socket = {socket}/>}/>
+        <Route exact path='/online' element={<Online state = {state} setState={setState} socket = {socket}/>}/>
         <Route exact path='/' element={<Home state = {state}/>}/>
         <Route exact path='/login' element={<LoginForm state = {state} setState = {setState}/>}/>
         <Route exact path='/logout' element={<Logout state = {state} setState = {setState}/>}/>
