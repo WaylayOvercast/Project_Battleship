@@ -1,11 +1,13 @@
 //import { useRecoilState } from 'recoil'
-import react, {useEffect, useState} from 'react'
+import react, {useEffect, useState} from 'react';
 //import storage from './RecoilState'
-import { v4 as uuidv4 } from 'uuid'
-import axios from "axios"
-import { useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import hoverClick from '../../audio/hover_click.wav';
+import woodThud from '../../audio/wood_thud.wav';
 
-function RegisterForm ({state, setState}){
+function RegisterForm ({ state, setState, FXhandler }){
     const [form, setForm] = useState({})
     const navigate = useNavigate();
     //const [store, setStore] = useRecoilState(storage)
@@ -35,11 +37,14 @@ function RegisterForm ({state, setState}){
         console.log(form)
         axios.post('http://localhost:5000/api/auth/register', form)
         .then( res => {
-            sessionStorage.setItem('username', form.username)
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('user_id', form.user_id)
-            setState({...state, isLogged:true})
-            navigate('/')
+            FXhandler(woodThud)
+            setTimeout(() => {
+                sessionStorage.setItem('username', form.username)
+                sessionStorage.setItem('token', res.data.token)
+                sessionStorage.setItem('user_id', form.user_id)
+                setState({...state, isLogged:true})
+                navigate('/')
+            }, 100)
         }).catch(err => console.error(err))        
     }
 
@@ -54,7 +59,10 @@ function RegisterForm ({state, setState}){
                 <label>Password:
                     <input id='pass_in' maxLength={60} onChange={handlePass} type='password'/>
                 </label>
-                <button type='submit'>Create</button>
+                <button 
+                    onMouseEnter={() => FXhandler(hoverClick)}
+                    type='submit'>Create
+                </button>
                 <a className='login-redirect' onClick={() => redirect()}>already have one?</a>
             </form>
         </div>
