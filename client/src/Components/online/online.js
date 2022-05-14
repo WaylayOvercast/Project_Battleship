@@ -1,11 +1,11 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
-import './game.css'
-import './online.css'
+import { useEffect, useState } from 'react';
+import { clickEffects, sonarEffects } from '../../audio/audioHandler';
+import './game.css';
+import './online.css';
 
 
-export default function Online({state, socket}) {
+export default function Online({state, setState, socket, FXhandler}) {
     const navigate = useNavigate();
     const [lobbies, updateLobbies] = useState({
         isOpen: false,
@@ -20,12 +20,14 @@ export default function Online({state, socket}) {
     }
 
     function close_match_maker(socket) {
+        FXhandler(clickEffects[0], .3)
         socket.emit('leave')
         console.log("LEAVING")
         updateLobbies({...lobbies, isOpen: false})
     }
 
     function createInvite (player, socket) {
+        FXhandler(clickEffects[1], .3)
         socket.emit('invite-player', { target: player.id, user: {name: sessionStorage.username, id: socket.id }})
         updateOutgoing( (outgoingInvites) => {
             return [...outgoingInvites, {name: player.username, id: player.id, status: 'Pending...'}]
@@ -39,10 +41,12 @@ export default function Online({state, socket}) {
         return false
     }
 
-    function RespondToInvite(invite, gameOn, socket) {
+    async function RespondToInvite(invite, gameOn, socket) {
         if(gameOn){
+            await FXhandler(clickEffects[1], .3)
             socket.emit('accept-invite', ({target: invite.id, user: socket.id}))
         }else{
+            await FXhandler(clickEffects[1], .3)
             socket.emit('decline-invite', {target: invite.id, user: { name: sessionStorage.username, id: socket.id}})
             const invites = [...incomingInvites].filter( item => {
                 return item.id !== invite.id
@@ -52,6 +56,8 @@ export default function Online({state, socket}) {
     }
 
     function init_match_maker (socket) {
+        FXhandler(clickEffects[0], .3)
+        FXhandler(sonarEffects[0], .3)
         console.log("INIT SOCKET")
         if (state.isLogged && sessionStorage.token) {
             socket.emit('auth', sessionStorage.token)
@@ -72,6 +78,8 @@ export default function Online({state, socket}) {
                     updateIncoming( (incomingInvites) => {
                         return [...incomingInvites, invite]
                     })
+                    FXhandler(clickEffects[1], .3)
+                    console.log('sound')
                 })
                 socket.on('invite-declined', (invite) => {
                     updateOutgoing( (outgoingInvites) => {
@@ -91,7 +99,7 @@ export default function Online({state, socket}) {
                             })
                             return [...cleaned]
                         })
-                    },45000)
+                    },60000)
                 })
                 socket.on('invite-accepted', (user) => {
                     console.log(user)
@@ -103,7 +111,6 @@ export default function Online({state, socket}) {
                         })
                     }
                 })
-
             })
         } else {
             alert('Failed to connect to Online match maker! :(')
@@ -119,11 +126,13 @@ export default function Online({state, socket}) {
                 </p>
             </div>
             <div className='online-panel'>     
-                <button className='find-create-btn' 
+                <button className='find-create-btn'
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)} 
                     onClick={() => init_match_maker(socket)}>
                     Find or Create a match
                 </button>
                 <button className='single-player-btn'
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)} 
                     onClick={() => startSinglePlayer()}
                     >SinglePlayer</button>
             </div>
@@ -131,6 +140,7 @@ export default function Online({state, socket}) {
                 <div className='match-maker-list'>
                     <div className='match-maker-list-nav'>
                         <button 
+                            onMouseEnter={() => FXhandler(clickEffects[2], .3)}
                             onClick={() => close_match_maker(socket)}
                             className={lobbies.isOpen ? 'match-nav-back-open':'match-nav-back-closed'}
                             > 	
@@ -153,6 +163,7 @@ export default function Online({state, socket}) {
                                 {handleDropDown(player) && 
                                     <div key= {`dropDown ${indx}`}className='MM-player-dropdown'>
                                         <button className='MM-player-invite'
+                                            onMouseEnter={() => FXhandler(clickEffects[2], .3)}
                                             onClick={() => createInvite(player, socket)}>
                                             Challenge
                                         </button>
@@ -184,10 +195,16 @@ export default function Online({state, socket}) {
                                 <div key={indx} className='listed-invite'>
                                     {`${invite.name} has challenged you!`}
                                     <div className='listed-options'>
-                                        <button className='listed-invite accept' onClick={() => RespondToInvite(invite, true, socket)}>
+                                        <button className='listed-invite accept' 
+                                            onClick={() => RespondToInvite(invite, true, socket)}
+                                            onMouseEnter={() => FXhandler(clickEffects[2], .3)}
+                                            >
                                             Accept
                                         </button>
-                                        <button className='listed-invite decline' onClick={() => RespondToInvite(invite, false, socket)}>
+                                        <button className='listed-invite decline' 
+                                            onClick={() => RespondToInvite(invite, false, socket)}
+                                            onMouseEnter={() => FXhandler(clickEffects[2], .3)}
+                                            >
                                             Decline
                                         </button>
                                     </div>

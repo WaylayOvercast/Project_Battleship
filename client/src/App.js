@@ -3,7 +3,7 @@ import storage from './RecoilState';
 import { useRecoilState } from 'recoil'
 import { Routes, Route, } from 'react-router-dom';
 import axios from 'axios';
-import react, { useState, useEffect } from 'react';
+import react, { useState, useEffect, useRef } from 'react';
 import Header from './Components/header/Header';
 import LoginForm from './Components/login/LoginForm';
 import RegisterForm from './Components/register/RegisterForm';
@@ -11,19 +11,29 @@ import Logout from './Components/logout/Logout';
 import Home from './Components/home/Home';
 import Online from './Components/online/online';
 import Singleplayer from './Components/online/singleplayer/Singleplayer';
+import { clickEffects, radioEffects, sonarEffects, ambEffects, themeEffects } from './audio/audioHandler';
 import { io } from 'socket.io-client'
+import { FXhandler, useTheme } from './Components/howler/HowlerHandler';
+import { Howl, Howler } from 'howler';
 
 const socket = io.connect('http://localhost:5000');
 
+
 function App() {
   const [ store, setStore ] = useRecoilState(storage);
+  const [audioChannels, setChannels] = useState({})
+  const [themeLoop, setTheme] = useState(null)
+  const [radioLoop, setRadio] = useState(null)
   const [ state, setState] = useState({
     isLogged: false,
+    isTheme: true,
   })
+
 
   useEffect(() => {
     
     if(sessionStorage.user_id && sessionStorage.username && sessionStorage.token){
+      
       const profile = {
         user_id: sessionStorage.user_id,
         username: sessionStorage.username,
@@ -35,21 +45,28 @@ function App() {
         setState({...state, isLogged:true})
       })
       .catch((err) => console.error(err))
-    }
+    } else {
+      setState({...state, isLogged:false})
+    } 
   },[])
-  
-  
+
+  const [setLoop] = useTheme() /* handles theme and ambient background loops */
+
+  useEffect(() => { 
+    Howler.unload(); 
+    setLoop(state.isTheme)
+  },[state.isTheme])
 
   return (
     <div className='App'>
-      <Header state = {state}/>
+      <Header state = {state} setState = {setState} FXhandler = {FXhandler}/>
       <Routes>
         <Route exact path='/online/singlePlayer' element={<Singleplayer state = {state} socket = {socket}/>}/>
-        <Route exact path='/online' element={<Online state = {state} setState={setState} socket = {socket}/>}/>
-        <Route exact path='/' element={<Home state = {state}/>}/>
-        <Route exact path='/login' element={<LoginForm state = {state} setState = {setState}/>}/>
-        <Route exact path='/logout' element={<Logout state = {state} setState = {setState}/>}/>
-        <Route exact path='/register' element={<RegisterForm state = {state} setState = {setState}/>}/>
+        <Route exact path='/online' element={<Online state = {state} setState = {setState} socket = {socket} FXhandler = {FXhandler}/>}/>
+        <Route exact path='/' element={<Home state = {state} FXhandler = {FXhandler}/>}/>
+        <Route exact path='/login' element={<LoginForm state = {state} setState = {setState} FXhandler = {FXhandler}/>}/>
+        <Route exact path='/logout' element={<Logout state = {state} setState = {setState} FXhandler = {FXhandler}/>}/>
+        <Route exact path='/register' element={<RegisterForm state = {state} setState = {setState} FXhandler = {FXhandler}/>}/>
       </Routes>
     </div> 
   );
