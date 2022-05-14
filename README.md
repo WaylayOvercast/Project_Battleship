@@ -3,4 +3,5 @@ A Node server using websockets to establish a two way connection with a React cl
 
 in work :
 
-working on restyling front end, as well as implementing audio for key events (possibly a theme song lol) wip version: https://www.youtube.com/watch?v=s91oihsn9i8
+  working on restyling front end, as well as implementing audio for key events (possibly a theme song lol)
+  wip version:  https://www.youtube.com/watch?v=s91oihsn9i8
