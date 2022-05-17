@@ -10,6 +10,7 @@ export function useTheme () {
     let newTimeout, lastEffect;
 
     function handleRadio () {
+    
         if ( isLoop ) {
             let randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
             let randInterval = Math.round(Math.random() * (90000 - 10000) + 10000);
@@ -17,7 +18,7 @@ export function useTheme () {
             if ( randEffect === lastEffect ) {
                 randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
             }
-            
+            console.log(randInterval)
             clearTimeout( radio );
             newTimeout = setTimeout(() => handleRadio(), randInterval );
             setRadio( newTimeout );
@@ -26,8 +27,12 @@ export function useTheme () {
                 src: [randEffect],
                 volume: .1
             });
+            
             lastEffect = randEffect;
-            return output.play();
+            output.play()
+            if ( output.playing() === false ) {
+                output.unload() // unload audio from stack if browser blocks it
+            }
         } else {
             clearTimeout( radio );
             setRadio( null );

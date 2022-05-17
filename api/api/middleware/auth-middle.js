@@ -40,7 +40,10 @@ async function checkLogin (req ,res, next){
           if(!userFromDB){
             next({status:404, message:'user not found'})
           }else if(bcrypt.compareSync(req.body.password.toString(), userFromDB.password)){
-            req.user = {username: userFromDB.username, user_id: userFromDB.user_id}
+            req.user = {
+              username: userFromDB.username,
+              user_id: userFromDB.user_id,
+            }
             next()
           }else{
             next({status:400, message:'invalid credentials'})
@@ -57,12 +60,17 @@ function checkToken (req, res, next) {
     next({status:401, message:'Token required'})
   }else{
     const token = req.headers.authorization.split(' ')[1] //for Bearer token
-    jwt.verify(token, JWT_SECRET, (err, decoded)=> {
+    jwt.verify(token, JWT_SECRET, async (err, decoded)=> {
       if(err){
         return next({status:403, message:'Invalid token'})
       }else{
-        req.decoded = decoded
-        next()
+        const user = await Users.findById(decoded.user_id);
+        if( user ) {
+          res.user = user;
+          next();
+        } else {
+          next({status: 404, message:'User could not be found'});
+        }
       }
     })
   }
@@ -81,8 +89,6 @@ async function checkLogout (req ,res , next){
     }
   } 
 }
-
-
 
 module.exports={
   checkToken,

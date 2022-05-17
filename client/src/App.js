@@ -1,6 +1,4 @@
 import './App.css';
-import storage from './RecoilState';
-import { useRecoilState } from 'recoil'
 import { Routes, Route, } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
@@ -17,16 +15,32 @@ import { Howl, Howler } from 'howler';
 
 const socket = io.connect('http://localhost:5000');
 
-
 function App() {
   const [ state, setState] = useState({
     isLogged: false,
-    isTheme: true,
+    isTheme: false,
   })
 
+  function checkLocalSettings () {
+    const settings = localStorage.getItem('PBisTheme')
+    if( settings === null || settings === 'true' ) {
+      settings === null && localStorage.setItem('PBisTheme', true)
+      setState({
+        ...state,
+        isTheme: true
+      })
+    } else {
+      setState({
+        ...state,
+        isTheme: false
+      })
+    }
+    console.log(settings)
+  }
 
   useEffect(() => {
-    
+    checkLocalSettings()
+
     if(sessionStorage.user_id && sessionStorage.username && sessionStorage.token){
       
       const profile = {
@@ -37,19 +51,26 @@ function App() {
       axios.put('http://localhost:5000/api/auth/rtrauth', profile, {headers : head})
       .then( res => {
         sessionStorage.setItem('token', res.data.token)
-        setState({...state, isLogged:true})
+        setState((state) => { return {...state, isLogged: true}})
       })
       .catch((err) => console.error(err))
+
     } else {
-      setState({...state, isLogged:false})
+      setState((state) => { return {...state, isLogged: false}})
     } 
   },[])
 
   const [setLoop] = useTheme() /* handles theme and ambient background loops */
 
-  useEffect(() => { 
+  useEffect(() => {
     Howler.unload(); 
-    setLoop(state.isTheme)
+    if ( state.isTheme ) {
+      localStorage.setItem('PBisTheme', true)
+      setLoop(true)
+    } else {
+      localStorage.setItem('PBisTheme', false)
+      setLoop(false)
+    } 
   },[state.isTheme])
 
   return (
@@ -68,8 +89,3 @@ function App() {
 }
 
 export default App;
-
-
-/* <Route exact path= '/' element={<Home/>}/>
-      <Route exact path='/register' element={<RegisterForm/>}/>
-      <Route path='/login' element={<LoginForm />}/> */

@@ -1,10 +1,12 @@
 const router = require('express').Router();
-const Users = require('../auth/auth-model')
-const Match = require('./core-model')
+const Users = require('../auth/auth-model');
+const Match = require('./core-model');
+const { checkToken } = require('../middleware/auth-middle');
 
-router.post('/gameOver',async (req, res, next) => {
+
+router.post('/gameOver', checkToken, async (req, res, next) => {
     try{
-        const player = await Users.findBy({user_id: req.body.user_id})
+        const player = await Users.findBy('user', '*', `user_id, ${req.body.user_id}`)
         Match.endMatch(req.body.match_id)
         if(player){
             res.status(201).json({message:{}})

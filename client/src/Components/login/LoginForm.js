@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-//import storage from './RecoilState'
 import axios from 'axios';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +7,6 @@ import { clickEffects } from '../../audio/audioHandler';
 function LoginForm ({state, setState, FXhandler}){
     const [form, setForm] = useState({})
     const navigate = useNavigate();
-    //const [store, setStore] = useRecoilState(storage)
     
     const handleUser = e =>{
         e.preventDefault()
@@ -26,12 +24,13 @@ function LoginForm ({state, setState, FXhandler}){
         .then( res => {
             FXhandler(clickEffects[0], .4)
             setTimeout(() => {
-                //setStore({islogged: true})
+            
                 sessionStorage.setItem('username', form.username)
                 sessionStorage.setItem('token', res.data.token)
                 sessionStorage.setItem('user_id', res.data.user_id)
-                setState({...state, isLogged:true})
+                setState({...state, isLogged: true })
                 navigate('/')
+
             }, 100)
         }).catch(err => console.error(err)) 
     }

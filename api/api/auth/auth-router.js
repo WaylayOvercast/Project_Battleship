@@ -27,17 +27,24 @@ router.post('/register', checkSubmission, async (req, res, next) => {
       }
     const created = await Users.add(newUser, req.body.user_id);
     const token = Users.createToken(user_id, username);
-    res.status(201).json({username: created.username, user_id: created.user_id, token: token});
+    res.status(201).json({
+      username: created.username,
+      user_id: created.user_id,
+      token: token
+    });
   }catch (err){
     next(err);
   }
 });
 
-router.put('/login', checkLogin, (req, res, next) => {
+router.put('/login', checkLogin, async (req, res, next) => {
   try {
-    console.log(req.body)
     const token = Users.createToken(req.user.user_id, req.user.username);
-    res.status(200).json({username: req.user.username, user_id: req.user.user_id, token: token});
+    res.status(200).json({
+      username: req.user.username,
+      user_id: req.user.user_id,
+      token: token
+    });
   }catch (err){
     next(err);
   }
