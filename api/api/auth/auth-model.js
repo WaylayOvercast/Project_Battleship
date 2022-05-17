@@ -1,7 +1,6 @@
 const db = require('../../data/dbConfig')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET, JWT_REFRESH} = require('../../variableConfig')
-const cleanup = require('node-schedule');
 
 
 function createToken(user_id, username){
@@ -15,17 +14,6 @@ function createToken(user_id, username){
     }
     return jwt.sign(payload, JWT_SECRET, options)
 }
-
-async function findOthers (id) {
-    const others = await db('user').whereNot('user_id', id)
-    if(!others){
-        return "no players found :("                //will probably be removed in favor of socket
-    }else{
-        return others
-    }
-}
-
-    // all below are pending SSL and postgress changes *subject to change*
 
 function find(table, item, condition) {
     return db(table).select(item, condition)         
@@ -53,5 +41,4 @@ module.exports = {
     findBy,
     findById,
     createToken,
-    findOthers,
 }
