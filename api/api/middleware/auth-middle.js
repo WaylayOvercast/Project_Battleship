@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../../variableConfig')
 const bcrypt = require('bcryptjs')
 
+
+/* file is subject to changes namely functional optimization and DRY rewrites */
+
 async function checkSubmission(req ,res, next) {
   try{ 
       let users = []

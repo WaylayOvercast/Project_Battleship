@@ -9,7 +9,7 @@ import './header.css';
 
 export default function Header ({state, setState, FXhandler, AmbientHandler}) {
     const navigate = useNavigate();
-    console.log('STATE', state.isTheme)
+    
     const checkIsLogged = () => {
         if(sessionStorage.user_id && sessionStorage.username && sessionStorage.token){
             return true    
