@@ -19,7 +19,7 @@ export default function Online({state, setState, socket, FXhandler}) {
         state.isLogged && navigate('/online/singlePlayer')
     }
 
-    function close_match_maker(socket) {
+    function close_match_maker(socket) { // this needs to be fixed
         FXhandler(clickEffects[0], .3)
         socket.emit('leave')
         console.log("LEAVING")
@@ -71,7 +71,7 @@ export default function Online({state, setState, socket, FXhandler}) {
                 socket.emit('fetch-matches')
             
                 socket.on('match-maker-refresh', () => {
-                    console.log('FETCH')
+                    console.log('FETCH-MATCHES')
                     socket.emit('fetch-matches')
                 })
                 socket.on('recieved-invite', (invite) => {
@@ -79,7 +79,6 @@ export default function Online({state, setState, socket, FXhandler}) {
                         return [...incomingInvites, invite]
                     })
                     FXhandler(clickEffects[1], .3)
-                    console.log('sound')
                 })
                 socket.on('invite-declined', (invite) => {
                     updateOutgoing( (outgoingInvites) => {
@@ -102,7 +101,7 @@ export default function Online({state, setState, socket, FXhandler}) {
                     },60000)
                 })
                 socket.on('invite-accepted', (user) => {
-                    console.log(user)
+                    console.log('invite-accepted', user)
                 })
                 socket.on('matches', (matches) => {
                     if(matches.length > 0) {

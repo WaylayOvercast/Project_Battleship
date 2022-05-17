@@ -18,15 +18,15 @@ export function useTheme () {
                 randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
             }
             
-            clearTimeout( radio )
+            clearTimeout( radio );
             newTimeout = setTimeout(() => handleRadio(), randInterval );
-            setRadio( newTimeout )
+            setRadio( newTimeout );
     
             const output = new Howl({
                 src: [randEffect],
                 volume: .1
             });
-            lastEffect = randEffect
+            lastEffect = randEffect;
             return output.play();
         } else {
             clearTimeout( radio );
@@ -69,8 +69,8 @@ export function useTheme () {
             handleRadio();
             ambient.play();
         } else {
-            clearTimeout( theme )
-            clearTimeout( radio )
+            clearTimeout( theme );
+            clearTimeout( radio );
             Howler.unload();
         }
     },[isLoop])
@@ -105,55 +105,3 @@ export function FXhandler (src, volume, loop) {
         return effect.play()
     }   
 }
-
-function radioHandler (srcArr, state, timeoutId) {
-    let newTimeout, lastInput;
-    if ( state ) {
-      let input = srcArr[Math.floor(Math.random()*srcArr.length)];
-      if ( input === lastInput ) {
-        input = srcArr[Math.floor(Math.random()*srcArr.length)];
-      }
-      let interval = Math.round(Math.random() * (90000 - 10000) + 10000);
-      clearTimeout( timeoutId );
-      newTimeout = setTimeout(() => radioHandler(srcArr), interval );
-      return ({ input: input, interval: Math.round(Math.random()*(90000 - 10000)+10000)})
-    } else {
-      clearTimeout( timeoutId );
-      Howler.unload();
-      return ({ state: null })
-    }
-  }
-
-
-//   let lastInput;
-
-//     function randInterval () { /* function handles random radio chatter and attempts to make sure that its not repetative */
-//       let radioInterval;
-      
-//       if (state.isTheme) {        
-//         let input = radioEffects[Math.floor(Math.random()*radioEffects.length)];        
-
-//         if (input === lastInput){
-//           input = radioEffects[Math.floor(Math.random()*radioEffects.length)];
-//         }
-        
-//         let interval = Math.round(Math.random() * (90000 - 10000) + 10000);
-        
-//         clearTimeout(radioLoop);  
-//         radioInterval = setTimeout( randInterval, interval );
-//         setRadio( radioInterval );
-
-//         const extra = new Howl({
-//           src: [input],
-//           volume: .1
-//         });
-
-//         lastInput = input;
-//         extra.play();
-//       } else { 
-//         console.log(radioLoop, 'RADIO LOOPS')
-//         clearTimeout( radioLoop );
-//         setRadio( null );
-//         Howler.unload();
-//       } 
-//     }

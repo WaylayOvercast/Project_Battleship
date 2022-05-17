@@ -3,7 +3,7 @@ import storage from './RecoilState';
 import { useRecoilState } from 'recoil'
 import { Routes, Route, } from 'react-router-dom';
 import axios from 'axios';
-import react, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from './Components/header/Header';
 import LoginForm from './Components/login/LoginForm';
 import RegisterForm from './Components/register/RegisterForm';
@@ -11,7 +11,6 @@ import Logout from './Components/logout/Logout';
 import Home from './Components/home/Home';
 import Online from './Components/online/online';
 import Singleplayer from './Components/online/singleplayer/Singleplayer';
-import { clickEffects, radioEffects, sonarEffects, ambEffects, themeEffects } from './audio/audioHandler';
 import { io } from 'socket.io-client'
 import { FXhandler, useTheme } from './Components/howler/HowlerHandler';
 import { Howl, Howler } from 'howler';
@@ -20,10 +19,6 @@ const socket = io.connect('http://localhost:5000');
 
 
 function App() {
-  const [ store, setStore ] = useRecoilState(storage);
-  const [audioChannels, setChannels] = useState({})
-  const [themeLoop, setTheme] = useState(null)
-  const [radioLoop, setRadio] = useState(null)
   const [ state, setState] = useState({
     isLogged: false,
     isTheme: true,
