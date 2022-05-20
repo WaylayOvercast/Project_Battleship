@@ -12,8 +12,7 @@
 
 .hdr-img{
     user-select: none;
-    width: 25%;
-    height: 80%;
+    width: 5rem;
     margin: .5% 0 0 5%;
     padding: 3%;
     box-shadow: .1rem .1rem 1rem .5rem #0000009c inset;

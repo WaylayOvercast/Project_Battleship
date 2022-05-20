@@ -21,15 +21,15 @@ function Home({state, FXhandler}) {
   return (
     <div className='home'>
       <h1 className='home-title'>BattleShip</h1>
-      <button 
-        onClick={() => handlePlay()}
-        onMouseEnter={() => FXhandler(clickEffects[2], .3) } 
-        className='home-play-btn'
-        >
+      
+      <div className='menu-img' style={{backgroundImage: `url(${shipImg})`}}>
+        <button 
+          onClick={() => handlePlay()}
+          onMouseEnter={() => FXhandler(clickEffects[2], .3) } 
+          className='home-play-btn'
+          >
           Play
         </button>
-      <div className='menu-image-container'>
-        <img draggable="false" className='menu-image' src={shipImg}/>
       </div>
     </div>
   );

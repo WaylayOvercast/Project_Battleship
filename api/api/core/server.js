@@ -13,10 +13,10 @@ const corsOptions = {
 const server = express();
 const httpServer = http.createServer(server);
 const io = require('socket.io')(httpServer, {cors: corsOptions} )
-server.use(express.json(), cors(corsOptions));// in dev
+server.use(express.json(), cors(corsOptions));
 
-server.use('/api/auth', authRouter);
-server.use('/api/core', coreRouter, checkToken); //needs coreRouter // only logged-in users should have access!
+server.use('/api/auth', authRouter); // auth in testing, needs improvements.
+server.use('/api/core', coreRouter, checkToken); // only logged-in users should have access!
  
 const socket_tools = require('./socket-tools');
 
@@ -25,7 +25,7 @@ socket_tools.start(io); // imported socket functions *needs work*
 server.get('/', (req, res, next)=> { res.status(200)});
 
 
-server.use((err, req, res, next) => { // eslint-disable-line
+server.use((err, req, res, next) => {
     res.status(err.status || 500).json({
       message: err.message,
       stack: err.stack,

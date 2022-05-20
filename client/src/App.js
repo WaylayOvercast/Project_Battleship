@@ -25,17 +25,10 @@ function App() {
     const settings = localStorage.getItem('PBisTheme')
     if( settings === null || settings === 'true' ) {
       settings === null && localStorage.setItem('PBisTheme', true)
-      setState({
-        ...state,
-        isTheme: true
-      })
+      setState({ ...state, isTheme: true })
     } else {
-      setState({
-        ...state,
-        isTheme: false
-      })
+      setState({ ...state, isTheme: false })
     }
-    console.log(settings)
   }
 
   useEffect(() => {
