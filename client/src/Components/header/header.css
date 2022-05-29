@@ -20,6 +20,7 @@
 
 .hdr-banner{
     width: 50%;
+    min-width: fit-content;
     height: 100%;
     display: flex;
     align-items: center;
@@ -27,6 +28,7 @@
     color: rgb(255, 255, 255);
     box-shadow: .1rem .1rem .3rem .1rem #0000004d inset;
     background-color: #6d1f1f;
+    background-size: cover;
 }
     
 .hdr-banner .hdr-home {

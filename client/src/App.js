@@ -26,8 +26,10 @@ function App() {
     if( settings === null || settings === 'true' ) {
       settings === null && localStorage.setItem('PBisTheme', true)
       setState({ ...state, isTheme: true })
+      console.log('CHECK = TRUE')
     } else {
       setState({ ...state, isTheme: false })
+      console.log('CHECK = FALSE')
     }
   }
 

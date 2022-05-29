@@ -18,9 +18,9 @@ export function useTheme () {
             if ( randEffect === lastEffect ) {
                 randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
             }
-            console.log(randInterval)
+            console.log('Timeout', randInterval)
             clearTimeout( radio );
-            newTimeout = setTimeout(() => handleRadio(), randInterval );
+            newTimeout = setTimeout( handleRadio, randInterval );
             setRadio( newTimeout );
     
             const output = new Howl({
@@ -29,10 +29,9 @@ export function useTheme () {
             });
             
             lastEffect = randEffect;
+             
             output.play()
-            if ( output.playing() === false ) {
-                output.unload() // unload audio from stack if browser blocks it
-            }
+            console.log('output.playing()', output.playing())
         } else {
             clearTimeout( radio );
             setRadio( null );
