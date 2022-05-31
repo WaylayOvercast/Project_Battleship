@@ -4,17 +4,6 @@ import { FXhandler } from "../../howler/HowlerHandler";
 import { clickEffects } from "../../../audio/audioHandler";
 
 
-const createMatrix = () => {
-    let grid = []
-    for(let x = 0; x < 10; x++){
-        grid.push([])
-        for(let y = 0; y < 10; y++){
-            grid[x].push(0)
-        }
-    }
-    return grid
-}
-
 const init_singlePlayerGame = (socket) => {
 
 }

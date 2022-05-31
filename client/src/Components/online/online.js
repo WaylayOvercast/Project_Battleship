@@ -16,7 +16,11 @@ export default function Online({state, setState, socket, FXhandler}) {
     const [incomingInvites, updateIncoming] = useState([])
 
     function startSinglePlayer() {
-        state.isLogged && navigate('/online/singlePlayer')
+        FXhandler(clickEffects[0], .3)
+        setTimeout(() => {
+            state.isLogged && navigate('/online/singlePlayer')
+        }, 100);
+        
     }
 
     function close_match_maker(socket) { // this needs to be fixed
