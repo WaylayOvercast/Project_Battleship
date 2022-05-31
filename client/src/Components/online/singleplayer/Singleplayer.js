@@ -94,7 +94,21 @@ export default function Singleplayer () {
                 }
             </section>
             <div className='game-commands-window'>
-                
+                <div className="ship-carrier">
+
+                </div>
+                <div className="ship-battleShip">
+
+                </div>
+                <div className="ship-destroyer">
+
+                </div>
+                <div className="ship-submarine">
+
+                </div>
+                <div className="ship-ptBoat">
+                    
+                </div>
             </div>
         </section> 
     )
