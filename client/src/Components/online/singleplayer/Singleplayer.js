@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FXhandler } from "../../howler/HowlerHandler";
 import { clickEffects } from "../../../audio/audioHandler";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDrag } from "react-dnd";
 
 
 const init_singlePlayerGame = (socket) => {
@@ -32,14 +31,20 @@ export default function Singleplayer () {
             ptBoat:[0,0]
         },
         selected: {}
-    })
+    });
     const [commanderWindow, setCommanderWindow] = useState({
         carrier: true,
         battleShip: true,
         destroyer: true,
         submarine: true,
         ptBoat: true,
-    })
+    });
+    const [{isDragging}, drag] = useDrag(() => ({
+        type: "ship",
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),  //gonna need lots of work here
+        }),
+    }));
 
 
     useEffect(() => {
@@ -63,57 +68,73 @@ export default function Singleplayer () {
     }
 
     return (
-        <DndProvider backend={HTML5Backend}>
-            <section className='game-window'>
-                <div className='game-window-nav'>
-                    <button className="game-nav-btn" 
-                        onClick={() => handleQuit()}
-                        onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
-                            &#10094;
-                    </button>
-                    <button className="game-play-btn"
-                        onClick={() => handlePlay()}
-                        onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
-                            Play
-                    </button>
-                    <button className="game-fire-btn"
-                        onClick={() => handleFire()}
-                        onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
-                            Fire
-                    </button>
+        
+        <section className='game-window'>
+            <div className='game-window-nav'>
+                <button className="game-nav-btn" 
+                    onClick={() => handleQuit()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        &#10094;
+                </button>
+                <button className="game-play-btn"
+                    onClick={() => handlePlay()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        Play
+                </button>
+                <button className="game-fire-btn"
+                    onClick={() => handleFire()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        Fire
+                </button>
+            </div>
+            <section className='enemy-board'>
+                {
+                    renderGrid().map((elm, indx) => {
+                    return <div key={`e-${indx}`} id={`tile e-${indx}`} >{`${indx}`}</div>
+                    })
+                }
+            </section>
+            <section className='self-board'>
+                {
+                    renderGrid().map((elm, indx) => {
+                    return <div key={`p-${indx}`} id={`tile p-${indx}`} >{`${indx}`}</div>
+                    })
+                }
+            </section>
+            <div className='game-commands-window'>
+                <div className='drop-window'>
+                    <div 
+                        className="ship carrier"
+                        ref={drag}
+                        id="1">
+
+                    </div>
+                    <div 
+                        className="ship battleShip"
+                        ref={drag}
+                        id="2">
+
+                    </div>
+                    <div 
+                        className="ship destroyer"
+                        ref={drag}
+                        id="3">
+
+                    </div>
+                    <div 
+                        className="ship submarine"
+                        ref={drag}
+                        id="4">
+
+                    </div>
+                    <div 
+                        className="ship ptBoat"
+                        ref={drag}
+                        id="5">
+
+                    </div>
                 </div>
-                <section className='enemy-board'>
-                    {
-                        renderGrid().map((elm, indx) => {
-                        return <div key={`e-${indx}`} id={`tile e-${indx}`} >{`${indx}`}</div>
-                        })
-                    }
-                </section>
-                <section className='self-board'>
-                    {
-                        renderGrid().map((elm, indx) => {
-                        return <div key={`p-${indx}`} id={`tile p-${indx}`} >{`${indx}`}</div>
-                        })
-                    }
-                </section>
-                <div className='game-commands-window'>
-                    <div className="ship carrier">
-
-                    </div>
-                    <div className="ship battleShip">
-
-                    </div>
-                    <div className="ship destroyer">
-
-                    </div>
-                    <div className="ship submarine">
-
-                    </div>
-                    <div className="ship ptBoat">
-
-                    </div>
-                </div>
-            </section> 
-        </DndProvider>
+            </div>
+        </section> 
     )
 }
