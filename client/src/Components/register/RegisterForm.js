@@ -22,18 +22,15 @@ function RegisterForm ({ state, setState, FXhandler }){
     const handleUser = e =>{
         e.preventDefault()
         setForm({...form, username: e.target.value})
-        console.log(form)
     }
 
     const handlePass = e =>{
         e.preventDefault()
         setForm({...form, password: e.target.value})
-        console.log(form)
     }
 
     const submitUser = e =>{
         e.preventDefault()
-        console.log(form)
         axios.post('http://localhost:5000/api/auth/register', form)
         .then( res => {
             FXhandler(woodThud)
