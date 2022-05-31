@@ -1,5 +1,8 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { FXhandler } from "../../howler/HowlerHandler";
+import { clickEffects } from "../../../audio/audioHandler";
+
 
 const createMatrix = () => {
     let grid = []
@@ -48,12 +51,40 @@ export default function Singleplayer () {
         
     },[])
 
+    const handleQuit = () => {
+        FXhandler(clickEffects[0], .4)
+        setTimeout(() => {
+            const confirm = window.confirm('All current game progress will be lost, Are you sure? ')
+            confirm && navigate('/online')
+        },100)
+    }
+
+    const handlePlay = () => {
+        alert(`not implemented yet :'(`)
+    }
+
+    const handleFire = () => {
+        alert(`not implemented yet :'(`)
+    }
+
     return (
         <section className='game-window'>
             <div className='game-window-nav'>
-                <button className="game-nav-btn" onClick={() => redirect()}> &#10094;</button>
-                <button className="game-play-btn">Play</button>
-                <button className="game-fire-btn">Fire</button>
+                <button className="game-nav-btn" 
+                    onClick={() => handleQuit()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        &#10094;
+                </button>
+                <button className="game-play-btn"
+                    onClick={() => handlePlay()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        Play
+                </button>
+                <button className="game-fire-btn"
+                    onClick={() => handleFire()}
+                    onMouseEnter={() => FXhandler(clickEffects[2], .3)}>
+                        Fire
+                </button>
             </div>
             <section className='enemy-board'>
                 {

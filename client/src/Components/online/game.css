@@ -24,18 +24,19 @@
     color: rgb(165, 165, 165);
     min-width: fit-content;
     min-height: fit-content;
+    padding: 1rem;
     border: none;
     font-size: 1.5rem;
     line-height: 1%;
     margin-left: 1%;
-    transition: all 1300ms ease-out;
+    transition: all 800ms ease-out;
 }
 
 .game-window .game-window-nav .game-nav-btn:hover { 
     background-color: rgb(156, 22, 22);
     color: rgb(185, 132, 132);
     box-shadow: 0rem 0rem 2rem .1rem rgba(180, 22, 22, 0.692);
-    transition: all 250ms ease-in;
+    transition: all 100ms ease-in;
 }
 
 .game-window .game-window-nav .game-play-btn {
@@ -47,17 +48,18 @@
     min-width: fit-content;
     min-height: fit-content;
     border: none;
+    padding: 1rem;
     font-size: 1.5rem;
     line-height: 1%;
     margin-left: 20.7%;
-    transition: all 1300ms ease-out;
+    transition: all 800ms ease-out;
 }
 
 .game-window .game-window-nav .game-play-btn:hover { 
     background-color: rgb(38, 129, 43);
     color: rgb(169, 196, 168);
     box-shadow: 0rem 0rem 2rem .1rem rgba(35, 180, 22, 0.692);
-    transition: all 250ms ease-in;
+    transition: all 100ms ease-in;
 }
 
 .game-window .game-window-nav .game-fire-btn {
@@ -68,18 +70,19 @@
     color: rgb(165, 165, 165);
     min-width: fit-content;
     min-height: fit-content;
+    padding: 1rem;
     border: none;
     font-size: 1.5rem;
     line-height: 1%;
     margin-left: 5%;
-    transition: all 1300ms ease-out;
+    transition: all 800ms ease-out;
 }
 
 .game-window .game-window-nav .game-fire-btn:hover {
     background-color: rgb(156, 22, 22);
     color: rgb(221, 170, 170);
     box-shadow: 0rem 0rem 2rem .1rem rgba(180, 22, 22, 0.692);
-    transition: all 250ms ease-in;
+    transition: all 100ms ease-in;
 }
 
 .game-window .enemy-board {
@@ -141,7 +144,7 @@
 .game-window .game-commands-window {
     align-self: flex-end;
     margin-left: 2.5%;
-    width: 30rem;
+    width: 25rem;
     height: 95%;
     background-color: rgb(39, 48, 39);
     box-shadow: 1rem 1rem 1rem black inset;
