@@ -31,7 +31,8 @@ export function useTheme () {
             lastEffect = randEffect;
              
             output.play()
-            console.log('output.playing()', output.playing())
+            console.log('output.playing()', output.playing()) // i still need to fix this
+            //get window audioContext and terminate excessive calls
         } else {
             clearTimeout( radio );
             setRadio( null );

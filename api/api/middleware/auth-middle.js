@@ -6,20 +6,20 @@ const bcrypt = require('bcryptjs')
 
 /* file is subject to changes namely functional optimization and DRY rewrites */
 
-async function checkSubmission(req ,res, next) {
+async function checkSubmission (req ,res, next) {
   try{ 
       let users = []
       let pass 
     if(req.body.password && req.body.username){
       pass = req.body.password
-      if (pass.length <= 3){
-        next({status:422, message:"Password must be longer than 3 chars"})
+      if (pass.length <= 6){
+        next({status: 422, message: 'Password must be longer than 6 characters'})
       }else{
         users = await Users.findBy({username: req.body.username})
         if (!users.length){ 
           next()
         }else{
-          next({status:403, message: 'username taken'})
+          next({status: 403, message: 'username taken'})
         }
       }
     }else{
@@ -34,11 +34,11 @@ async function checkSubmission(req ,res, next) {
 async function checkLogin (req ,res, next){
     try{
         if(!req.body.password || !req.body.username){
-          next({status:400, message:'username and password required'})
+          next({status: 400, message:'username and password required'})
         }else{
           const [userFromDB] = await Users.findBy({username: req.body.username})
           if(!userFromDB){
-            next({status:404, message:'user not found'})
+            next({status: 403})
           }else if(bcrypt.compareSync(req.body.password.toString(), userFromDB.password)){
             req.user = {
               username: userFromDB.username,
@@ -46,7 +46,7 @@ async function checkLogin (req ,res, next){
             }
             next()
           }else{
-            next({status:400, message:'invalid credentials'})
+            next({status: 403})
           }
         }
     }catch(err){
@@ -57,19 +57,19 @@ async function checkLogin (req ,res, next){
 function checkToken (req, res, next) {
 
   if(!req.headers.authorization){
-    next({status:401, message:'Token required'})
+    next({status: 401, message: 'Token required'})
   }else{
     const token = req.headers.authorization.split(' ')[1] //for Bearer token
     jwt.verify(token, JWT_SECRET, async (err, decoded)=> {
       if(err){
-        return next({status:403, message:'Invalid token'})
+        return next({status: 403})
       }else{
         const user = await Users.findById(decoded.user_id);
         if( user ) {
           res.user = user;
           next();
         } else {
-          next({status: 404, message:'User could not be found'});
+          next({status: 403});
         }
       }
     })
@@ -83,7 +83,7 @@ async function checkLogout (req ,res , next){
   }else{
     const [userFromDB] = await Users.findBy({username: req.body.username})
     if(!userFromDB){
-      next({status:404, message:'user not found'})
+      next({status: 403})
     }else{
       next()
     }

@@ -42,10 +42,14 @@ export default function Singleplayer () {
         },
         selected: {}
     })
+    const [commanderWindow, setCommanderWindow] = useState({
+        carrier: true,
+        battleShip: true,
+        destroyer: true,
+        submarine: true,
+        ptBoat: true,
+    })
 
-    const redirect = () => {
-        navigate('/online')
-    }
 
     useEffect(() => {
         
