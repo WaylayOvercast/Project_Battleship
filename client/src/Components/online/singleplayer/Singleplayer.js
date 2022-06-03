@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FXhandler } from "../../howler/HowlerHandler";
 import { clickEffects } from "../../../audio/audioHandler";
 import { useDrag } from "react-dnd";
@@ -45,11 +45,18 @@ export default function Singleplayer () {
             isDragging: !!monitor.isDragging(),  //gonna need lots of work here
         }),
     }));
+    const tileRef = useRef(null);
 
+
+    
+    useEffect(() => {
+        console.log(isDragging)
+    },[isDragging])
 
     useEffect(() => {
-        
-    },[])
+        console.log('width', tileRef.current.offsetWidth)
+        console.log('height', tileRef.current.offsetHeight)
+    },[isDragging])
 
     const handleQuit = () => {
         FXhandler(clickEffects[0], .4)
@@ -97,7 +104,11 @@ export default function Singleplayer () {
             <section className='self-board'>
                 {
                     renderGrid().map((elm, indx) => {
-                    return <div key={`p-${indx}`} id={`tile p-${indx}`} >{`${indx}`}</div>
+                        if ( indx > 0 ) {
+                            return <div key={`p-${indx}`} id={`tile p-${indx}`} >{`${indx}`}</div> 
+                        } else {
+                            return <div ref={tileRef} key={`p-${indx}`} id={`tile p-${indx}`} >{`${indx}`}</div>
+                        }
                     })
                 }
             </section>
@@ -105,7 +116,7 @@ export default function Singleplayer () {
                 <div className='drop-window'>
                     <div 
                         className="ship carrier"
-                        ref={drag}
+                        ref={drag} // need fix for ref and height of each ship should be set correctly
                         id="1">
 
                     </div>

@@ -19,6 +19,7 @@ function App() {
   const [ state, setState] = useState({
     isLogged: false,
     isTheme: false,
+    isAutoPlay: false,
   })
 
   function checkLocalSettings () {
@@ -59,17 +60,21 @@ function App() {
 
   useEffect(() => {
     Howler.unload(); 
-    if ( state.isTheme ) {
+    if ( state.isTheme && state.isAutoPlay ) {
       localStorage.setItem('PBisTheme', true)
       setLoop(true)
     } else {
       localStorage.setItem('PBisTheme', false)
       setLoop(false)
     } 
-  },[state.isTheme])
+  },[state.isTheme, state.isAutoPlay])
+
+  function handleAudioPolicy () {
+    state.isAutoPlay === false && setState((state) => ({...state, isAutoPlay: true}))
+  }
 
   return (
-    <div className='App'>
+    <div className='App' onClick={() => handleAudioPolicy()}>
       <Header state = {state} setState = {setState} FXhandler = {FXhandler}/>
       <Routes>
         <Route exact path='/online/singlePlayer' element={<Singleplayer state = {state} socket = {socket}/>}/>

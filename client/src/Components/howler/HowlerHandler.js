@@ -12,31 +12,34 @@ export function useTheme () {
     function handleRadio () {
     
         if ( isLoop ) {
-            let randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
-            let randInterval = Math.round(Math.random() * (90000 - 10000) + 10000);
-
-            if ( randEffect === lastEffect ) {
-                randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
-            }
-            console.log('Timeout', randInterval)
-            clearTimeout( radio );
-            newTimeout = setTimeout( handleRadio, randInterval );
-            setRadio( newTimeout );
-    
-            const output = new Howl({
-                src: [randEffect],
-                volume: .1
-            });
             
-            lastEffect = randEffect;
-             
-            output.play()
-            console.log('output.playing()', output.playing()) // i still need to fix this
-            //get window audioContext and terminate excessive calls
+                let randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
+                let randInterval = Math.round(Math.random() * (90000 - 10000) + 10000);
+                // select random effect and interval
+    
+                if ( randEffect === lastEffect ) {
+                    randEffect = radioEffects[Math.floor(Math.random()*radioEffects.length)];
+                    // make sure it wasnt last played
+                }
+        
+                clearTimeout( radio );
+                newTimeout = setTimeout( handleRadio, randInterval ); 
+                setRadio( newTimeout );
+                // set recursive timeout and save to state for cancelation
+        
+                const output = new Howl({
+                    src: [randEffect],
+                    volume: .1
+                });
+                
+                lastEffect = randEffect;
+                 
+                output.play()
+                // play effect 
         } else {
             clearTimeout( radio );
             setRadio( null );
-            return Howler.unload();
+            Howler.unload();
         }
     }
 
@@ -50,33 +53,35 @@ export function useTheme () {
     }
     
     function handleTheme () {
-        let themeInterval;
 
-        if (isLoop) {
-          clearTimeout( theme );
-          themeInterval = setTimeout(() => createTheme(), 25000 );
-          setTheme( themeInterval );
-        } else {
-          clearTimeout( theme );
-          setTheme( null );
-          Howler.unload();
-        }
+        clearTimeout( theme );
+        let themeInterval = setTimeout(() => createTheme(), 25000 );
+        setTheme( themeInterval ); 
+        // store timeout refrence in state in order to cancel it before it runs
     }
 
     React.useEffect(() => {
         if ( isLoop ) {
-            const ambient = new Howl({
+            const ambient = new Howl({ 
                 src: ambEffects,
                 loop: true,
                 volume: .2
             });
-            handleTheme();
-            handleRadio();
             ambient.play();
+            // create ambient track and play first.
+
+            handleTheme();
+            newTimeout = setTimeout(() => { 
+                handleRadio();
+            }, 27000); 
+            setRadio( newTimeout );
+            // start radio calls right after the theme.
+
         } else {
-            clearTimeout( theme );
+            clearTimeout( theme ); 
             clearTimeout( radio );
             Howler.unload();
+            // wipe timeouts from stack and unload audio if audio is toggled
         }
     },[isLoop])
     
