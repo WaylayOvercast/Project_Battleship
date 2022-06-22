@@ -1,13 +1,11 @@
-import react from "react";
 import { useNavigate, Link } from "react-router-dom";
 import navBarImg from '../../images/navbarimg.png';
 import hoverClick from '../../audio/hover_click.wav';
-import click2 from '../../audio/click2.wav';
 import click from '../../audio/click.wav';
 import './header.css';
 
 
-export default function Header ({state, setState, FXhandler, AmbientHandler}) {
+export default function Header ({state, setState, FXhandler}) {
     const navigate = useNavigate();
     
     const checkIsLogged = () => {
@@ -31,44 +29,43 @@ export default function Header ({state, setState, FXhandler, AmbientHandler}) {
         })
        setTimeout(() => FXhandler(click, .4), 0)
     }
-
+    
     return (
         <section className="hdr-frame">
-
             {checkIsLogged() ? 
-            <div className="hdr-options">
-                <button className="hdr-mute"
-                    onClick={() => toggleTheme()}
-                    onMouseEnter={() => FXhandler(hoverClick, .3)} 
-                    >&#128264;
-                </button>
-                <button 
-                    className="hdr-logout"
-                    onMouseEnter={() => FXhandler(hoverClick, .3)} 
-                    onClick={() => linkHandler('/logout')}
-                    >Logout
-                </button>
-            </div>
+                <div className="hdr-options">
+                    <button className="hdr-mute"
+                        onClick={() => toggleTheme()}
+                        onMouseEnter={() => FXhandler(hoverClick, .3)} 
+                        >&#128264;
+                    </button>
+                    <button 
+                        className="hdr-logout"
+                        onMouseEnter={() => FXhandler(hoverClick, .3)} 
+                        onClick={() => linkHandler('/logout')}
+                        >Logout
+                    </button>
+                </div>
             :
-            <div className="hdr-options">
-                <button className="hdr-mute"
-                    onClick={() => toggleTheme()}
-                    onMouseEnter={() => FXhandler(hoverClick, .3)} 
-                    >&#128264;    
-                </button>
-                <button 
-                    className="hdr-login"
-                    onMouseEnter={() => FXhandler(hoverClick, .3)}
-                    onClick={() => linkHandler('/login')}  
-                    to= "/login">Login
-                </button>
-                <button 
-                    className="hdr-register"
-                    onMouseEnter={() => FXhandler(hoverClick, .3)}
-                    onClick={() => linkHandler('/register')}  
-                    to= "/register">Register
-                </button>
-            </div>
+                <div className="hdr-options">
+                    <button className="hdr-mute"
+                        onClick={() => toggleTheme()}
+                        onMouseEnter={() => FXhandler(hoverClick, .3)} 
+                        >&#128264;    
+                    </button>
+                    <button 
+                        className="hdr-login"
+                        onMouseEnter={() => FXhandler(hoverClick, .3)}
+                        onClick={() => linkHandler('/login')}  
+                        to= "/login">Login
+                    </button>
+                    <button 
+                        className="hdr-register"
+                        onMouseEnter={() => FXhandler(hoverClick, .3)}
+                        onClick={() => linkHandler('/register')}  
+                        to= "/register">Register
+                    </button>
+                </div>
             }
             
             <div className="hdr-banner">

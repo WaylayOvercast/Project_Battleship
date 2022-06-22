@@ -7,17 +7,6 @@ const jwt = require('jsonwebtoken')
 module.exports = {
   start: function (io) {
 
-    // io.use(( socket, next )=> {      // jwt verification needs to be implemented 
-    //   if(socket.handshake.query){
-    //     jwt.verify(socket.handshake.query, JWT_SECRET, (err, decoded) => {
-    //       if(err) return next(new Error('Auth error/Invalid token'));
-    //       socket.decoded = decoded
-    //       next();
-    //     });
-    //   }else{
-    //     next(new Error('No token found'));
-    //   }
-    // })
     const authenticate = (token) => {
       return jwt.verify(token, JWT_SECRET, (err, decoded) => {
         if(err){
@@ -32,7 +21,7 @@ module.exports = {
       console.log('connected', socket.id)
       const countryOfOrigin = socket.handshake.headers["accept-language"].split(',')[0]
       socket.on('auth', token => {
-        console.log('is_auth?:',authenticate(token))
+        
         if(authenticate(token)){
           socket.emit('allgood')
           socket.handshake.auth.token = token
@@ -75,6 +64,7 @@ module.exports = {
             socket.to('match-maker').emit('match-maker-refresh')
             socket.leave('match-maker')
           })
+          
         }else{
           socket.disconnect() 
         }
@@ -87,12 +77,3 @@ module.exports = {
     })
   }
 }
-
-//const name = jwt.decode(socket.handshake.auth.token)
-  // socket.join('match-maker')
-  // socket.emit('match-maker-running')
-  // socket.on('find-match', async () => {
-  //   const clients = await io.in('match-maker').fetchSockets()
-  //   console.log(clients)
-  //   socket.emit('matches', clients)
-  // })

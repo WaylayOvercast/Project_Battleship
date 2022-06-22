@@ -23,3 +23,31 @@ export default function UseHandleError() {
     }
     return [errorState, checkStatus]
 }
+
+export function useWindowDimensions() {
+    
+    const sanity = typeof window !== undefined;
+    const [dimensions, setDimensions] = React.useState(getDimensions())
+
+    function getDimensions() {
+        if ( sanity ) {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        } else {
+            return null
+        } 
+    }
+
+    React.useEffect(() => {
+        function handleResize() {
+            sanity && setDimensions(getDimensions());
+        }
+        
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    },[sanity])
+
+    return dimensions
+}
