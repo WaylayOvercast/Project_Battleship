@@ -388,3 +388,9 @@
     color: #ffcece;
 }
 
+@media screen and (max-width: 800px) {
+    .online .online-welcome p {
+        width: 55%;
+        height: 10rem;
+    }
+}

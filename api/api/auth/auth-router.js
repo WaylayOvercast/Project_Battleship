@@ -17,22 +17,22 @@ router.put('/rtrauth', checkToken, (req, res, next)=> {
 })
 
 router.post('/register', checkSubmission, async (req, res, next) => {
-  
-  try{
-      const { username, password, user_id } = req.body
-      const newUser = {
-        user_id,  
-        username,
-        password: bcrypt.hashSync(password.toString(), ~~BCRYPT_ROUNDS)   
-      }
-    const created = await Users.add(newUser, req.body.user_id);
+  try {
+    const { username, password, user_id } = req.body
+    const newUser = {
+      user_id,  
+      username,
+      password: bcrypt.hashSync(password.toString(), ~~BCRYPT_ROUNDS)   
+    }
+    const created = await Users.add(newUser, user_id);
+    
     const token = Users.createToken(user_id, username);
     res.status(201).json({
       username: created.username,
       user_id: created.user_id,
       token: token
     });
-  }catch (err){
+  } catch (err) {
     next(err);
   }
 });

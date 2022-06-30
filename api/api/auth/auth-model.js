@@ -32,7 +32,7 @@ async function findById(uuid) {
 
 async function add(user) {
     await db('user').insert(user)
-    return findById(uuid)
+    return findById(user.user_id)
 }
 
 module.exports = {
