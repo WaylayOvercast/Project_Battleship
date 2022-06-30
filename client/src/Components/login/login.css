@@ -36,6 +36,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
 .login-card {
     padding: 2%;
     background-color: rgb(59, 59, 59);
@@ -73,10 +74,12 @@
     flex-direction: column;
     font-size: 2rem;
 }
+
 .login-form label {
     user-select: none;
     padding: 2%;
 }
+
 .login-form #user_in, #pass_in {
     margin-left: 1rem;
     box-shadow: .1rem .1rem .5rem .1rem #000000a8 inset;
@@ -105,3 +108,75 @@
     background: #a2f8b8;
     box-shadow: .1rem .1rem .5rem .1rem #000000a8 inset;
 } 
+
+@media screen and (max-width: 900px) {
+
+    .login-form {
+        padding: 2%;
+        font-size: 1.5rem;
+    }
+    .login-card .login-form .missionFailed {
+        text-decoration: underline;
+        font-size: .7rem;
+    }
+    .login-card .login-form p {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    .login-form label {
+        display: flex;
+        justify-content: center;
+        margin-top: 2%;
+        padding: .5% 0 .5% 0;
+    }
+    .login-form #user_in, #pass_in {
+        margin-left: .5rem;
+        font-size: 1.4rem;
+    }
+
+    .error-card {
+        padding-left: 1%;
+        padding-right: 1%;
+        text-align: center;
+    }
+    
+}
+
+@media screen and (max-width: 600px) {
+    .error-card {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 370px) {
+
+    .login-form {
+        padding: 2%;
+        font-size: 1.1rem;
+    }
+    .login-card .login-form .missionFailed {
+        text-decoration: underline;
+        font-size: .5rem;
+    }
+    .login-card .login-form p {
+        font-size: .7rem;
+        display: flex;
+        align-items: center;
+    }
+    .login-form label {
+        display: flex;
+        justify-content: center;
+        height: 1.5rem;
+        margin-top: 2%;
+        padding: .5% 0 .5% 0;
+    }
+    .login-form #user_in, #pass_in {
+        margin-left: .5rem;
+        font-size: 1.1rem;
+    }
+    .login-form button {
+        font-size: .7rem;
+    }
+
+}
